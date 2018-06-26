@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="misapplication-tap-highlight" content="no" />
+    
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="img/favicon-apple-152px-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" href="img/favicon-apple-152px-precomposed.png" />
+    <meta name="msapplication-TileImage" content="img/favicon-win8.png" />
+    <meta name="msapplication-TileColor" content="#75706C" />
+    
+    <title>Controls.js NIM Game</title>
+
+    <style type="text/css">
+      body { margin:0; overflow:hidden; height:100%; }
+      #ngAppLoading { position:absolute;left:0;top:0;width:100%;height:100%;z-index:100000;background-color: #FFFFFF; }
+      .ngAppLoaded { visibility:hidden;opacity:0;filter:alpha(opacity=0);-webkit-transition:visibility 0s linear 1s,opacity 1s linear;-moz-transition:visibility 0s linear 1s,opacity 1s linear;-ms-transition:visibility 0s linear 1s,opacity 1s linear;-o-transition:visibility 0s linear 1s,opacity 1s linear;transition:visibility 0s linear 1s,opacity 1s linear; }    
+      #ngProgress { position:absolute;left:50%;top:80%; visibility: hidden; }
+      #ngProgress1 { position:absolute; overflow: hidden; left: 0px; top: 0px; }
+      #ngProgress2 { position:absolute; overflow: hidden; left: 0px; top: 0px; }
+      .ngLoadVert { -webkit-transition:height 1s linear;-moz-transition:height 1s linear;-ms-transition:height 1s linear;-o-transition:height 1s linear;transition:height 1s linear; }      
+      .ngLoadHorz { -webkit-transition:width 1s linear;-moz-transition:width 1s linear;-ms-transition:width 1s linear;-o-transition:width 1s linear;transition:width 1s linear; }      
+    </style>
+
+    <script type="text/javascript">
+    
+      var fver=5;
+      
+      var ngLibsURL='controls/libs/';
+
+      var ngDevices = {
+        'desktop':         {},
+        'mobile':          {'IsMobile':true,'MaxWidth':600},
+        'mobile_landscape':{'IsMobile':true,'MaxWidth':600,'Landscape':true}
+      };
+      
+      var ngAppFiles = [
+        // Controls.js files  (use build/release in production environment)
+        'controls/controls.js',
+        
+        // Application files
+        'skin/skin.css?'+fver,
+        'skin/skin_common.js?'+fver,
+        'main.js?'+fver
+      ];
+      
+       var ngAppDeviceFiles = {
+      'desktop': [
+        'desktop.js?'+fver,
+        'skin/skin_desktop.js?'+fver
+      ],
+      'mobile': [
+        'mobile.js?'+fver,
+        'skin/skin_mobile.js?'+fver
+      ],
+      'mobile_landscape': [
+        'mobile.js?'+fver,
+        'skin/skin_mobile.js?'+fver
+      ]};
+                  
+    </script>
+
+    <script>
+      // Cordova loader add-on
+      var CordovaDeviceReady=false;
+      var CordovaAppLoaded=false;            
+      
+      function CordovaRunApp()
+      {
+        if((CordovaDeviceReady)&&(CordovaAppLoaded)&&(typeof ngApp==='object'))
+        {
+          ngApp.Run();
+        }
+      }
+      
+      function CordovaAppLoaded()
+      {
+        CordovaAppLoaded=true;
+        CordovaRunApp();
+        return false;
+      }
+      
+      document.addEventListener('deviceready', function() {
+        CordovaDeviceReady=true;
+        CordovaRunApp();  
+      }, false);
+    </script>
+    
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="controls/loader-image.js"></script>
+    
+  </head>
+  <body scroll="no" onload="ngLoadApplication('ngApp',CordovaAppLoaded)">  
+
+    <div id="ngAppLoading" class="ngAppLoading">
+      <div id="ngProgress">    
+        <div id="ngProgress1">
+          <img id="ngImgProgress" src="img/loading.gif" alt="..."  />
+        </div>
+        <div id="ngProgress2">
+          <img src="img/loading-progress.gif" alt="..."  />
+        </div>
+      </div>
+    </div>    
+
+    <div id="ngApp" class="ngApplication"></div>
+  </body>
+</html>

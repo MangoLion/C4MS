@@ -1,0 +1,51 @@
+GUIDE TO GET STARTED
+====================
+
+How to run examples
+-------------------
+
+1. Open "examples/" folder.
+
+2. Pick one from the list of examples and open the appropriate folder.
+
+3. Open index.html in your browser (double-click on the file).
+
+Some browsers (Internet Explorer) may require you to enable blocked content.
+Please allow the browser to show all content on the page.
+
+
+How to start new project
+------------------------
+
+1. Open "templates/" folder.
+
+2. Choose one from the provided templates and copy that template folder to your work folder.
+   Be careful that you copy the folder without moving it.
+
+3. Rename copied folder to your project name and open renamed folder.
+
+4. Replace files in project's "controls/" folder with files from "build/release/{version}/".
+
+5. Open main.js in your favorite text editor/IDE.
+
+6. Start coding your project (procedure ngMain is the application's starting point).
+
+
+Note: If you plan to create native mobile application, see "PhoneGap-Cordova README.txt" 
+      in "templates/phonegap-cordova/" folder.
+
+
+How to test my project
+----------------------
+
+If you are using a web server and your project folder is accessible via this web server,
+open web browser and type URL that represents your project folder.
+
+If you are not using a web server:
+
+1. Open your project folder.
+
+2. Open index.html in your browser (double-click on the file).
+
+Some browsers (Internet Explorer) may require you to enable blocked content.
+Please allow the browser to show all content on the page.

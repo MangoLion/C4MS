@@ -1,0 +1,33 @@
+.weMyAppColor { background-color:#E6007E !important; }
+.weMyAppColorText { color:#E6007E !important; }
+.weMyAppColorDropDown .weDropDownLightRow_Focus, .weMyAppColorDropDown .weDropDownLightRow_Focus TD, .weMyAppColorDropDown .weDropDownLightRowChecked_Focus, .weMyAppColorDropDown .weDropDownLightRowChecked_Focus TD, .weMyAppColorDropDown .weDropDownLightRowGrayed_Focus, .weMyAppColorDropDown .weDropDownLightRowGrayed_Focus TD {
+  color:#FFFFFF;
+  background-color:#E6007E;
+  padding:2px 15px 2px 15px;
+}
+.weMyAppColorListBox .weListBoxLightSelected, .weMyAppColorListBox .weListBoxLightSelected TD {
+  background-color:#E6007E !important;
+  color:#FFFFFF;
+}
+.weMyAppColorCalendar .weCalendarLightNow {
+  color:#E6007E;
+  font-weight:bold;
+}
+.weMyAppColorCalendar .weCalendarLightNow_Focus {
+  color:#E6007E;
+  font-weight:bold;
+}
+.weMyAppColorCalendar .weCalendarLightNowSelected {
+  font-weight:bold;
+  background-color:#E6007E;
+  color:#FFFFFF;
+}
+.weMyAppColorCalendar .weCalendarLightDaySelected {
+  background-color:#E6007E;
+  color:#FFFFFF;
+}
+.weMyAppColorMenu .weMenuLightRow_Focus, .weMyAppColorMenu .weMenuLightRow_Focus TD, .weMyAppColorMenu .weMenuLightRowChecked_Focus, .weMyAppColorMenu .weMenuLightRowChecked_Focus TD, .weMyAppColorMenu .weMenuLightRowGrayed_Focus, .weMyAppColorMenu .weMenuLightRowGrayed_Focus TD {
+  color:#FFFFFF;
+  background-color:#E6007E;
+  padding:2px 15px 2px 15px;
+}
