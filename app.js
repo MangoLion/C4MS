@@ -11,6 +11,11 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/studentView/index.html'));
 });
 
+app.get('/admin', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/adminView/index.html'));
+});
+
+
 server.listen(8080);
 
 io.on('connection', function(client) {
@@ -18,10 +23,22 @@ io.on('connection', function(client) {
 
     client.on('login', function(data) {
            console.log(data);
+           data.Text = data.id;
+           logins.push(data);
     });
 
     client.on('session card', function(data) {
            console.log(data);
+           data.Text = data.id;
+           cards.push(data);
+    });
+
+    client.on('admin request', function(data) {
+            data.Text = data.id;
+           client.emit('admin data', { logins: logins, cards: cards });
     });
 
 });
+
+logins = [];
+cards = [];
