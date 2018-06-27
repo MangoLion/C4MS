@@ -36,6 +36,7 @@ function ngMain()
               Events: {
                 OnClick: function (e) {
                   socket.emit('login', { id: AppForm.tfID.Text });
+                  localStorage['login'] = AppForm.tfID.Text;
                 }
               }
             }
@@ -251,17 +252,106 @@ function ngMain()
               },
               Events: {
                 OnClick: function (e) {
-                  socket.emit('session card', { id: AppForm.tfIDCard1.Text, date: AppForm.tfDate.Text, time: AppForm.tfTime.Text, facetoFaceAppt: AppForm.cbFacetoFace.Checked,
-                  facetoFaceWalk: AppForm.cbFacetoFaceWalkIn.Checked, onlineAppt: AppForm.cbOnlineAppt.Checked, studentName: AppForm.tfStudent.Text, courseName: AppForm.tfCourse.Text,
-                instructorName: AppForm.tfInstructor.Text, tutor1: AppForm.tfTutor1.Text, tutor2: AppForm.tfTutor2.Text, notes: AppForm.tfNote.Text  });
+
+                  AppForm.tfNote.SetText('');
+                  AppForm.tfTutor1.SetText('');
+                  AppForm.tfTutor2.SetText('');
+
+                  socket.emit('session card', {
+                    id: AppForm.tfIDCard1.Text,
+                    date: AppForm.tfDate.Text,
+                    time: AppForm.tfTime.Text,
+                    facetoFaceAppt: AppForm.cbFacetoFace.Checked,
+                    facetoFaceWalk: AppForm.cbFacetoFaceWalkIn.Checked,
+                    onlineAppt: AppForm.cbOnlineAppt.Checked,
+                    studentName: AppForm.tfStudent.Text,
+                    courseName: AppForm.tfCourse.Text,
+                    instructorName: AppForm.tfInstructor.Text,
+                    tutor1: AppForm.tfTutor1.Text,
+                    tutor2: AppForm.tfTutor2.Text,
+                    notes: AppForm.tfNote.Text
+                  });
+
+                localStorage['login'] = AppForm.tfIDCard1.Text;
+                localStorage['face to face appt'] = AppForm.cbFacetoFace.Checked
+                localStorage['face to face walk in'] = AppForm.cbFacetoFaceWalkIn.Checked
+                localStorage['online appt'] = AppForm.cbOnlineAppt.Checked
+                localStorage['student name'] = AppForm.tfStudent.Text
+                localStorage['instructor name'] = AppForm.tfInstructor.Text;
+                localStorage['course name'] = AppForm.tfCourse.Text;
+
                 }
               }
             }
           }
         },
-        { Text: 'Resources' }
+        {
+          Text: 'Resources',
+          Controls: {
+            wePages2: {
+              Type: 'wePages',
+              L: 0,
+              T: 0,
+              R: 0,
+              B: 0,
+              Data: {
+                HTMLEncode: true,
+                Page: 0,
+                PagesAlign: 'left',
+                PagesVAlign: 'top'
+              },
+              Pages: [
+                { Text: 'Pre-Algebra' },
+                { Text: 'Algebra' },
+                { Text: 'Calculus' },
+                { Text: 'Calculus 2' }
+              ]
+            }
+          }
+        }
       ]
     }
   });
   AppForm.Update();
+  localStorage = {};
+  var cachedID = localStorage['login'];
+  if (cachedID){
+    AppForm.tfID.SetText(cachedID);
+    AppForm.tfIDCard1.SetText(cachedID);
+  }
+  var d = new Date();
+
+  AppForm.tfDate.SetText(d.toLocaleDateString());
+  AppForm.tfTime.SetText(d.toLocaleTimeString());
+
+  var cachedf2fAppt = localStorage['face to face appt'];
+  if (cachedf2fAppt){
+    //AppForm.cbFacetoFace.Check(cachedf2fAppt);
+  }
+
+  var cachedf2fWalkin = localStorage['face to face walk in'];
+  if (cachedf2fWalkin){
+    //AppForm.cbFacetoFaceWalkIn.Check(cachedf2fWalkin);
+  }
+
+  var cachedOnlineAppt = localStorage['online appt'];
+  if (cachedOnlineAppt){
+    //AppForm.cbOnlineAppt.Check(cachedOnlineAppt);
+  }
+
+  var cachedStudent = localStorage['student name'];
+  if (cachedStudent){
+    AppForm.tfStudent.SetText(cachedStudent);
+  }
+
+  var cachedCourse = localStorage['course name'];
+  if (cachedCourse){
+    AppForm.tfCourse.SetText(cachedCourse);
+  }
+
+  var cachedInstructor = localStorage['instructor name'];
+  if (cachedInstructor){
+    AppForm.tfInstructor.SetText(cachedInstructor);
+  }
+
 }

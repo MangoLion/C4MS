@@ -3,6 +3,8 @@ var socket = io.connect();
 
 function ngMain()
 {
+  var clipboardHandler = new ClipboardHandler
+
   AppForm = new ngControls({
   wePages1: {
     Type: 'wePages',
@@ -12,7 +14,7 @@ function ngMain()
     B: 0,
     Data: {
       HTMLEncode: true,
-      Page: 1
+      Page: 0
     },
     Pages: [
       {
@@ -38,10 +40,12 @@ function ngMain()
               HTMLEncode: true,
               Text: 'Copy and Remove',
               OnClick: function (e) {
-                var selected = AppForm.listLogins.Items[0]
+                var selected = AppForm.listLogins.GetSelected()[0];
+                if (!selected)
+                  selected = AppForm.listLogins.Items[0];
+                clipboardHandler.copy(selected.id);
                 AppForm.listLogins.Remove(selected);
                 AppForm.listLogins.Update();
-                return true;
               }
             }
           }
@@ -55,14 +59,19 @@ function ngMain()
             L: 0,
             T: 0,
             W: 220,
-            B: 32,
+
             Data: {
               HTMLEncode: true,
               Items: [],
               SelectType: nglSelectSingle,
               OnClickItem: function (e) {
                 var selected = AppForm.listCards.GetSelected()[0]
-                AppForm.tfCard.SetText(selected);
+
+                var str = "";
+                for (var a in selected)
+                  if (a != 'Text')
+                    str += a + "\n" + selected[a] + "\n\n";
+                AppForm.tfCard.SetText(str);
                 return true;
               }
             }
@@ -72,7 +81,7 @@ function ngMain()
             L: 240,
             T: 60,
             W: 440,
-            H: 420,
+            B:0,
             Data: { Text: '' }
           },
           btCopyCard: {
@@ -81,7 +90,15 @@ function ngMain()
             T: 8,
             Data: {
               HTMLEncode: true,
-              Text: 'Copy and Remove'
+              Text: 'Remove',
+              OnClick: function (e) {
+                var selected = AppForm.listLogins.GetSelected()[0];
+                if (!selected)
+                  selected = AppForm.listCards.Items[0];
+
+                AppForm.listLogins.Remove(selected);
+                AppForm.listLogins.Update();
+              }
             }
           }
         }
