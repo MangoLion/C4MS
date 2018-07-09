@@ -252,11 +252,6 @@ function ngMain()
               },
               Events: {
                 OnClick: function (e) {
-
-                  AppForm.tfNote.SetText('');
-                  AppForm.tfTutor1.SetText('');
-                  AppForm.tfTutor2.SetText('');
-
                   socket.emit('session card', {
                     id: AppForm.tfIDCard1.Text,
                     date: AppForm.tfDate.Text,
@@ -271,15 +266,16 @@ function ngMain()
                     tutor2: AppForm.tfTutor2.Text,
                     notes: AppForm.tfNote.Text
                   });
-
-                localStorage['login'] = AppForm.tfIDCard1.Text;
-                localStorage['face to face appt'] = AppForm.cbFacetoFace.Checked
-                localStorage['face to face walk in'] = AppForm.cbFacetoFaceWalkIn.Checked
-                localStorage['online appt'] = AppForm.cbOnlineAppt.Checked
-                localStorage['student name'] = AppForm.tfStudent.Text
-                localStorage['instructor name'] = AppForm.tfInstructor.Text;
-                localStorage['course name'] = AppForm.tfCourse.Text;
-
+                  localStorage['login'] = AppForm.tfIDCard1.Text;
+                  localStorage['face to face appt'] = AppForm.cbFacetoFace.Checked;
+                  localStorage['face to face walk in'] = AppForm.cbFacetoFaceWalkIn.Checked;
+                  localStorage['online appt'] = AppForm.cbOnlineAppt.Checked;
+                  localStorage['student name'] = AppForm.tfStudent.Text;
+                  localStorage['instructor name'] = AppForm.tfInstructor.Text;
+                  localStorage['course name'] = AppForm.tfCourse.Text;
+                  AppForm.tfNote.SetText('');
+                  AppForm.tfTutor1.SetText('');
+                  AppForm.tfTutor2.SetText('');
                 }
               }
             }
@@ -301,10 +297,90 @@ function ngMain()
                 PagesVAlign: 'top'
               },
               Pages: [
-                { Text: 'Pre-Algebra' },
-                { Text: 'Algebra' },
-                { Text: 'Calculus' },
-                { Text: 'Calculus 2' }
+                {
+                  Text: 'Begining Algebra',
+                  Controls: {
+                    lbPreAlgebra: {
+                      Type: 'weText',
+                      L: 20,
+                      T: 16,
+                      Data: {
+                        HTMLEncode: false,
+                        Text: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLz02P9ArNcAOQ2t0rDa4utmvO8jMNK58a" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+                      }
+                    }
+                  }
+                },
+                {
+                  Text: 'Algebra',
+                  Controls: {
+                    lbAlgebra: {
+                      Type: 'weText',
+                      L: 20,
+                      T: 16,
+                      Data: {
+                        HTMLEncode: false,
+                        Text: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLz02P9ArNcAOQ2t0rDa4utmvO8jMNK58a" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+                      }
+                    }
+                  }
+                },
+                {
+                  Text: 'Calculus',
+                  Controls: {
+                    lbCalc: {
+                      Type: 'weText',
+                      L: 20,
+                      T: 16,
+                      Data: {
+                        HTMLEncode: false,
+                        Text: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLz02P9ArNcAOtOL0_DCriVecOfcP8Wcdt" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+                      }
+                    }
+                  }
+                },
+                {
+                  Text: 'Calculus 2',
+                  Controls: {
+                    lbCalc2: {
+                      Type: 'weText',
+                      L: 20,
+                      T: 16,
+                      Data: {
+                        HTMLEncode: false,
+                        Text: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLz02P9ArNcAOtqHttN-i8ZxAeh-_f9mC1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+                      }
+                    }
+                  }
+                },
+                {
+                  Text: 'Statistics',
+                  Controls: {
+                    lbStats: {
+                      Type: 'weText',
+                      L: 20,
+                      T: 16,
+                      Data: {
+                        HTMLEncode: false,
+                        Text: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLz02P9ArNcANjYxL_T63nzsfOd4XnIWcc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+                      }
+                    }
+                  }
+                },
+                {
+                  Text: 'Other Resources',
+                  Controls: {
+                    weText2: {
+                      Type: 'weText',
+                      L: 20,
+                      T: 20,
+                      Data: {
+                        HTMLEncode: false,
+                        Text: '<a href="https://www.khanacademy.org">Khan Academy</a>'
+                      }
+                    }
+                  }
+                }
               ]
             }
           }

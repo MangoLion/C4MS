@@ -1,6 +1,7 @@
 var AppForm = null;
 var socket = io.connect();
 
+
 function ngMain()
 {
   var clipboardHandler = new ClipboardHandler
@@ -43,6 +44,9 @@ function ngMain()
                 var selected = AppForm.listLogins.GetSelected()[0];
                 if (!selected)
                   selected = AppForm.listLogins.Items[0];
+
+                socket.emit('delete login', selected);
+
                 clipboardHandler.copy(selected.id);
                 AppForm.listLogins.Remove(selected);
                 AppForm.listLogins.Update();
@@ -69,7 +73,7 @@ function ngMain()
 
                 var str = "";
                 for (var a in selected)
-                  if (a != 'Text')
+                  if (a != 'Text' && a != 'index')
                     str += a + "\n" + selected[a] + "\n\n";
                 AppForm.tfCard.SetText(str);
                 return true;
@@ -92,12 +96,13 @@ function ngMain()
               HTMLEncode: true,
               Text: 'Remove',
               OnClick: function (e) {
-                var selected = AppForm.listLogins.GetSelected()[0];
+                var selected = AppForm.listCards.GetSelected()[0];
                 if (!selected)
                   selected = AppForm.listCards.Items[0];
 
-                AppForm.listLogins.Remove(selected);
-                AppForm.listLogins.Update();
+                socket.emit('delete card', selected);
+                AppForm.listCards.Remove(selected);
+                AppForm.listCards.Update();
               }
             }
           }

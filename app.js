@@ -18,24 +18,49 @@ app.get('/admin', function(req, res) {
 
 server.listen(8080);
 
+
+var index = 0;
+
 io.on('connection', function(client) {
     console.log('Client connected...');
 
     client.on('login', function(data) {
            console.log(data);
+           data.index = index;
            data.Text = data.id;
            logins.push(data);
+
+           index ++;
     });
 
     client.on('session card', function(data) {
            console.log(data);
+           data.index = index;
            data.Text = data.id;
            cards.push(data);
+
+           index ++;
     });
 
     client.on('admin request', function(data) {
             data.Text = data.id;
            client.emit('admin data', { logins: logins, cards: cards });
+    });
+
+    client.on('delete login', function(data) {
+          var deleteIndex = data.index;
+          for (var a = 0; a < logins.length; a ++){
+            if (logins[a].index == deleteIndex)
+              logins.splice(a, 1);
+          }
+    });
+
+    client.on('delete card', function(data) {
+          var deleteIndex = data.index;
+          for (var a = 0; a < cards.length; a ++){
+            if (cards[a].index == deleteIndex)
+              cards.splice(a, 1);
+          }
     });
 
 });
