@@ -52,7 +52,7 @@ io.on('connection', function(client) {
           for (var a = 0; a < logins.length; a ++){
             if (logins[a].index == deleteIndex)
               logins.splice(a, 1);
-          }
+          } 
     });
 
     client.on('delete card', function(data) {
@@ -63,7 +63,40 @@ io.on('connection', function(client) {
           }
     });
 
+    client.on('delete all cards', function(data) {
+        cards = [];
+  });
+
+    client.on('log request', function() {
+        var log = [];
+        log.push(["StudentID", "Date", "Time", "Duration", "Center", "Reason","CourseSubject", "TermID", "Notes"]);
+        cards.forEach(entry => {
+            var row = [entry.id, entry.date, standardToMilitary(entry.time), 1, "Math Center", entry.reason, entry.courseName, "201803", entry.notes];
+            log.push(row);
+        });
+
+        var csvContent = "data:text/csv;charset=utf-8,";
+        log.forEach(function(rowArray){
+            var row = rowArray.join(",");
+            csvContent += row + "\r\n";
+         }); 
+        client.emit('log string', { logString:csvContent});
+  });
+
 });
 
 logins = [];
 cards = [];
+
+function standardToMilitary(timeString){
+    var hours = Number(timeString.match(/^(\d+)/)[1]);
+    var minutes = Number(timeString.match(/:(\d+)/)[1]);
+    var AMPM = timeString.match(/\s(.*)$/)[1];
+    if(AMPM == "PM" && hours<12) hours = hours+12;
+    if(AMPM == "AM" && hours==12) hours = hours-12;
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+    if(hours<10) sHours = "0" + sHours;
+    if(minutes<10) sMinutes = "0" + sMinutes;
+    return sHours + ":" + sMinutes;
+}

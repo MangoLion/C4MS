@@ -35,8 +35,23 @@ function ngMain()
               },
               Events: {
                 OnClick: function (e) {
-                  socket.emit('login', { id: AppForm.tfID.Text });
-                  localStorage['login'] = AppForm.tfID.Text;
+                  var text = AppForm.tfID.Text;
+                  if (!text.match(/^-{0,1}\d+$/)) //check if is integer
+                  {
+                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','weDlgMessageBox', function(c) { return true; });
+                    return;
+                  }
+
+                  if (!text.length != 9){
+                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','weDlgMessageBox', function(c) { return true; });
+                    return;
+                  }
+                  
+                  
+                  socket.emit('login', { id: text });
+                  localStorage['login'] = text;
+                  var currentDate = new Date();
+                  localStorage['last login time'] = formatAMPM(new Date());
                 }
               }
             }
@@ -56,13 +71,13 @@ function ngMain()
               Type: 'weEditTime',
               L: 100,
               T: 108,
-              W: 150
+              W: 220
             },
             tfDate: {
               Type: 'weEditDate',
               L: 100,
               T: 68,
-              W: 180
+              W: 220
             },
             weText1: {
               Type: 'weText',
@@ -94,7 +109,7 @@ function ngMain()
             weLabel1: {
               Type: 'weLabel',
               L: 20,
-              T: 148,
+              T: 180,
               Data: {
                 HTMLEncode: true,
                 Text: 'Face to face Appt'
@@ -103,7 +118,7 @@ function ngMain()
             lb2: {
               Type: 'weLabel',
               L: 20,
-              T: 188,
+              T: 220,
               Data: {
                 HTMLEncode: true,
                 Text: 'Face to Face Walk In'
@@ -112,7 +127,7 @@ function ngMain()
             weLabel3: {
               Type: 'weLabel',
               L: 20,
-              T: 228,
+              T: 260,
               Data: {
                 HTMLEncode: true,
                 Text: 'Online Appt'
@@ -121,7 +136,7 @@ function ngMain()
             cbFacetoFace: {
               Type: 'weCheckBox',
               L: 220,
-              T: 148,
+              T: 180,
               Data: {
                 HTMLEncode: true,
                 Text: ''
@@ -130,7 +145,7 @@ function ngMain()
             cbFacetoFaceWalkIn: {
               Type: 'weCheckBox',
               L: 220,
-              T: 188,
+              T: 220,
               Data: {
                 HTMLEncode: true,
                 Text: ''
@@ -139,7 +154,7 @@ function ngMain()
             cbOnlineAppt: {
               Type: 'weCheckBox',
               L: 220,
-              T: 228,
+              T: 260,
               Data: {
                 HTMLEncode: true,
                 Text: ''
@@ -148,7 +163,7 @@ function ngMain()
             weLabel4: {
               Type: 'weLabel',
               L: 20,
-              T: 268,
+              T: 300,
               Data: {
                 HTMLEncode: true,
                 Text: 'Student'
@@ -157,7 +172,7 @@ function ngMain()
             lbCourse: {
               Type: 'weLabel',
               L: 20,
-              T: 308,
+              T: 340,
               Data: {
                 HTMLEncode: true,
                 Text: 'Course'
@@ -166,7 +181,7 @@ function ngMain()
             lbInstructor: {
               Type: 'weLabel',
               L: 20,
-              T: 348,
+              T: 380,
               Data: {
                 HTMLEncode: true,
                 Text: 'Instructor'
@@ -175,7 +190,7 @@ function ngMain()
             lbTutor1: {
               Type: 'weLabel',
               L: 20,
-              T: 388,
+              T: 420,
               Data: {
                 HTMLEncode: true,
                 Text: 'Tutor 1'
@@ -184,7 +199,7 @@ function ngMain()
             lbTutor2: {
               Type: 'weLabel',
               L: 20,
-              T: 428,
+              T: 460,
               Data: {
                 HTMLEncode: true,
                 Text: 'Tutor 2'
@@ -193,7 +208,7 @@ function ngMain()
             lbDuring: {
               Type: 'weLabel',
               L: 20,
-              T: 468,
+              T: 500,
               Data: {
                 HTMLEncode: true,
                 Text: 'During this session, we worked on...'
@@ -202,58 +217,71 @@ function ngMain()
             tfStudent: {
               Type: 'weEdit',
               L: 100,
-              T: 268,
+              T: 300,
               W: 300,
               Data: { Text: '' }
             },
             tfCourse: {
               Type: 'weEdit',
               L: 100,
-              T: 308,
+              T: 340,
               W: 300,
               Data: { Text: '' }
             },
             tfInstructor: {
               Type: 'weEdit',
               L: 100,
-              T: 348,
+              T: 380,
               W: 300,
               Data: { Text: '' }
             },
             tfTutor1: {
               Type: 'weEdit',
               L: 100,
-              T: 384,
+              T: 416,
               W: 300,
               Data: { Text: '' }
             },
             tfTutor2: {
               Type: 'weEdit',
               L: 100,
-              T: 428,
+              T: 460,
               W: 300,
               Data: { Text: '' }
             },
             tfNote: {
               Type: 'weMemo',
               L: 0,
-              T: 508,
+              T: 540,
               H: 240,
               R: 0,
               Data: { Text: '' }
             },
             Submit: {
               Type: 'weButton',
-              L: 20,
-              T: 768,
+              L: 24,
+              T: 788,
               Data: {
                 HTMLEncode: true,
                 Text: 'Submit'
               },
               Events: {
                 OnClick: function (e) {
+                  var text =  AppForm.tfIDCard1.Text;
+                  if (!text.match(/^-{0,1}\d+$/)) //check if is integer
+                  {
+                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','weDlgMessageBox', function(c) { return true; });
+                    return;
+                  }
+
+                  if (text.trim().length != 9){
+                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','weDlgMessageBox', function(c) { return true; });
+                    return;
+                  }
+
                   socket.emit('session card', {
                     id: AppForm.tfIDCard1.Text,
+                    reason: AppForm.cbReason.Text,
                     date: AppForm.tfDate.Text,
                     time: AppForm.tfTime.Text,
                     facetoFaceAppt: AppForm.cbFacetoFace.Checked,
@@ -276,6 +304,32 @@ function ngMain()
                   AppForm.tfNote.SetText('');
                   AppForm.tfTutor1.SetText('');
                   AppForm.tfTutor2.SetText('');
+                }
+              }
+            },
+            weLabel5: {
+              Type: 'weLabel',
+              L: 20,
+              T: 148,
+              Data: {
+                HTMLEncode: true,
+                Text: 'Reason:'
+              }
+            },
+            cbReason: {
+              Type: 'weDropDown',
+              L: 100,
+              T: 148,
+              W: 220,
+              Data: { Text: 'General Help' },
+              DropDown: {
+                Type: 'ngList',
+                Data: {
+                  Items: [
+                    { Text: 'General Help' },
+                    { Text: 'General Focus' },
+                    { Text: 'Test Prep' }
+                  ]
                 }
               }
             }
@@ -387,9 +441,10 @@ function ngMain()
         }
       ]
     }
-  });
+  }  
+  );
   AppForm.Update();
-  localStorage = {};
+  //localStorage = {};
   var cachedID = localStorage['login'];
   if (cachedID){
     AppForm.tfID.SetText(cachedID);
@@ -428,6 +483,13 @@ function ngMain()
   var cachedInstructor = localStorage['instructor name'];
   if (cachedInstructor){
     AppForm.tfInstructor.SetText(cachedInstructor);
+  }
+
+  var cachedTime = localStorage['last login time'];
+  if (cachedTime){
+    AppForm.tfTime.SetText(cachedTime);
+  }else{
+    AppForm.tfTime.SetText(formatAMPM(new Date()));
   }
 
 }
