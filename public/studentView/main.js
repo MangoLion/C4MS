@@ -38,12 +38,12 @@ function ngMain()
                   var text = AppForm.tfID.Text;
                   if (!text.match(/^-{0,1}\d+$/)) //check if is integer
                   {
-                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','weDlgMessageBox', function(c) { return true; });
+                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','Error ⚠', function(c) { return true; });
                     return;
                   }
 
-                  if (!text.length != 9){
-                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','weDlgMessageBox', function(c) { return true; });
+                  if (text.length != 9){
+                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','Error ⚠', function(c) { return true; });
                     return;
                   }
                   
@@ -270,12 +270,12 @@ function ngMain()
                   var text =  AppForm.tfIDCard1.Text;
                   if (!text.match(/^-{0,1}\d+$/)) //check if is integer
                   {
-                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','weDlgMessageBox', function(c) { return true; });
+                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','Error ⚠', function(c) { return true; });
                     return;
                   }
 
                   if (text.trim().length != 9){
-                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','weDlgMessageBox', function(c) { return true; });
+                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','Error ⚠', function(c) { return true; });
                     return;
                   }
 
