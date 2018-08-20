@@ -21,14 +21,14 @@ function ngMain()
             tfID: {
               Type: 'weEdit',
               L: 20,
-              T: 28,
+              T: 188,
               W: 220,
               Data: { Text: '900' }
             },
             btSignIn: {
               Type: 'weButton',
               L: 80,
-              T: 88,
+              T: 248,
               Data: {
                 HTMLEncode: true,
                 Text: 'Sign In'
@@ -36,23 +36,36 @@ function ngMain()
               Events: {
                 OnClick: function (e) {
                   var text = AppForm.tfID.Text;
-                  if (!text.match(/^-{0,1}\d+$/)) //check if is integer
-                  {
-                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','Error ⚠', function(c) { return true; });
+                  if (!text.match(/^-{0,1}\d+$/))
+                    //check if is integer
+                    {
+                      ngMessageDlg('weDlgMessageBox', 'Student ID must be a number!', 'Error ⚠', function (c) {
+                        return true;
+                      });
+                      return;
+                    }
+                  if (text.length != 9) {
+                    ngMessageDlg('weDlgMessageBox', 'Student ID must be exactly 9 digits!', 'Error ⚠', function (c) {
+                      return true;
+                    });
                     return;
                   }
-
-                  if (text.length != 9){
-                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','Error ⚠', function(c) { return true; });
-                    return;
-                  }
-                  
-                  
                   socket.emit('login', { id: text });
                   localStorage['login'] = text;
                   var currentDate = new Date();
                   localStorage['last login time'] = formatAMPM(new Date());
                 }
+              }
+            },
+            logo: {
+              Type: 'weText',
+              L: 15,
+              T: 0,
+              W: 300,
+              H: 200,
+              Data: { 
+                HTMLEncode: false,
+                Text: '<img src="logo.jpg" alt="Logo">'
               }
             }
           }
@@ -267,18 +280,21 @@ function ngMain()
               },
               Events: {
                 OnClick: function (e) {
-                  var text =  AppForm.tfIDCard1.Text;
-                  if (!text.match(/^-{0,1}\d+$/)) //check if is integer
-                  {
-                    ngMessageDlg('weDlgMessageBox','Student ID must be a number!','Error ⚠', function(c) { return true; });
+                  var text = AppForm.tfIDCard1.Text;
+                  if (!text.match(/^-{0,1}\d+$/))
+                    //check if is integer
+                    {
+                      ngMessageDlg('weDlgMessageBox', 'Student ID must be a number!', 'Error ⚠', function (c) {
+                        return true;
+                      });
+                      return;
+                    }
+                  if (text.trim().length != 9) {
+                    ngMessageDlg('weDlgMessageBox', 'Student ID must be exactly 9 digits!', 'Error ⚠', function (c) {
+                      return true;
+                    });
                     return;
                   }
-
-                  if (text.trim().length != 9){
-                    ngMessageDlg('weDlgMessageBox','Student ID must be exactly 9 digits!','Error ⚠', function(c) { return true; });
-                    return;
-                  }
-
                   socket.emit('session card', {
                     id: AppForm.tfIDCard1.Text,
                     reason: AppForm.cbReason.Text,
@@ -438,10 +454,28 @@ function ngMain()
               ]
             }
           }
+        },
+        {
+          Text: 'Forums',
+          Controls: {
+            tfForum: {
+              Type: 'weText',
+              L: 0,
+              T: 0,
+              R: 0,
+              B: 0,
+              Data: {
+                HTMLEncode: false,
+                Text: '<iframe height="100%" width="100%" src="https://math.loyallyon.com/">Your browser doesnt support iframes</iframe>'
+              },
+              ScrollBars: ssAuto
+            }
+          }
         }
       ]
     }
-  }  
+  }
+  
   );
   AppForm.Update();
   //localStorage = {};
