@@ -545,7 +545,7 @@ function ngMain()
           ],
           Events: {
             OnPageChanged: function (c, oldpage) {
-              if (c.Page == 3)
+              if (c.Page == 4)
                 location.href = 'https://math.loyallyon.com';
               /*
                 if (c.Page == 1){
