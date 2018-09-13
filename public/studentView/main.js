@@ -17,9 +17,9 @@ function ngMain()
       Controls: {
         logo: {
           Type: 'weText',
-          L: 18,
+          L: 0,
           T: 0,
-          W: 300,
+          R:0,
           H: 180,
           Data: {
             HTMLEncode: false,
@@ -377,7 +377,7 @@ function ngMain()
                   }
                 },
                 pbExp: {
-                  Type: 'weProgressBar',
+                  Type: 'stdProgressBar',
                   L: 130,
                   T: 33,
                   R: 5

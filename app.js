@@ -55,7 +55,7 @@ io.on('connection', function(client) {
             }
 
             giveExp(getStudent(data.id));
-
+            client.emit('profile data', {profile: getStudent(data.id) });
            index ++;
     });
 
@@ -122,7 +122,7 @@ function registerStudent(id){
         toNextLevel: levelCaps[0],
         nextReward: "",
         level: 0,
-        rewards: []
+        rewards: ["☕ Mug"]
     }
 
     profiles["#"+id] = student;
