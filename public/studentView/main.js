@@ -31,8 +31,8 @@ function ngMain()
           L: 0,
           T: 178,
           R: 0,
-      H:950,
-          style:{ backgroundColor: '#c2ffb3' },
+          H: 950,
+          style: { backgroundColor: '#c2ffb3' },
           Data: {
             HTMLEncode: true,
             Page: 0
@@ -79,8 +79,7 @@ function ngMain()
                       localStorage['last login time'] = formatAMPM(new Date());
                     }
                   }
-                },
-                
+                }
               }
             },
             {
@@ -285,8 +284,8 @@ function ngMain()
                 },
                 Submit: {
                   Type: 'weButton',
-                  L: 24,
-                  T: 788,
+                  L: 20,
+                  T: 800,
                   Data: {
                     HTMLEncode: true,
                     Text: 'Submit'
@@ -364,6 +363,75 @@ function ngMain()
                 }
               },
               H: 1600
+            },
+            {
+              Text: 'Profile',
+              Controls: {
+                lbExp: {
+                  Type: 'weLabel',
+                  L: 5,
+                  T: 20,
+                  Data: {
+                    HTMLEncode: true,
+                    Text: 'Experience:'
+                  }
+                },
+                pbExp: {
+                  Type: 'weProgressBar',
+                  L: 130,
+                  T: 33,
+                  R: 5
+                },
+                lbNext: {
+                  Type: 'weLabel',
+                  L: 5,
+                  T: 52,
+                  Data: {
+                    HTMLEncode: true,
+                    Text: 'To Next level:'
+                  }
+                },
+                lbReward: {
+                  Type: 'weLabel',
+                  L: 5,
+                  T: 84,
+                  Data: {
+                    HTMLEncode: true,
+                    Text: 'Next Reward:'
+                  }
+                },
+                listRewards: {
+                  Type: 'weList',
+                  L: 5,
+                  T: 160,
+                  W: 155,
+                  H: 200,
+                  style: { borderStyle: 'dashed' },
+                  Data: {
+                    HTMLEncode: true,
+                    Items: [{ Text: 'Item 1' }]
+                  }
+                },
+                weLabel6: {
+                  Type: 'weLabel',
+                  L: 5,
+                  T: 128,
+                  Data: {
+                    HTMLEncode: true,
+                    Text: 'Rewards Claimed:'
+                  }
+                },
+                lbLevel: {
+                  Type: 'weLabel',
+                  L: 0,
+                  T: 1,
+                  R: 0,
+                  Data: {
+                    HTMLEncode: true,
+                    Text: 'Level'
+                  }
+                }
+              }
             },
             {
               Text: 'Resources',
@@ -472,14 +540,25 @@ function ngMain()
             },
             {
               Text: 'Forums',
-              Controls: {
-              }
+              Controls: {}
             }
           ],
           Events: {
             OnPageChanged: function (c, oldpage) {
               if (c.Page == 3)
-                location.href = "https://math.loyallyon.com";
+                location.href = 'https://math.loyallyon.com';
+              /*
+                if (c.Page == 1){
+                  AppForm.groupMain.H = 950;
+                  delete AppForm.groupMain.B;
+                  AppForm.Update();
+                  console.log(c);
+                }else{
+                  AppForm.groupMain.B = 0;
+                  delete AppForm.groupMain.H;
+                  AppForm.Update();
+                  console.log(c);
+                }*/
               return true;
             }
           }
@@ -489,6 +568,7 @@ function ngMain()
   }
   
   
+  
   );
   AppForm.Update();
   //localStorage = {};
@@ -496,8 +576,19 @@ function ngMain()
   if (cachedID){
     AppForm.tfID.SetText(cachedID);
     AppForm.tfIDCard1.SetText(cachedID);
+    
+    socket.emit('profile request', {id: cachedID});
   }
   var d = new Date();
+
+  socket.on('profile data', function (data) {
+    var profile = data.profile;
+    AppForm.lbLevel.SetText("Level: " + (profile.level + 1));
+    AppForm.pbExp.SetPosition(profile.exp/(profile.exp + profile.toNextLevel)*100);
+    AppForm.lbNext.SetText("To Next Level: " + profile.toNextLevel);
+    AppForm.listRewards.SetItems(profile.rewards);
+    AppForm.lbReward.SetText("Next Reward: " + profile.nextReward);
+  });
 
   AppForm.tfDate.SetText(d.toLocaleDateString());
   AppForm.tfTime.SetText(d.toLocaleTimeString());

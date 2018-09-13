@@ -24,12 +24,23 @@ var index = 0;
 io.on('connection', function(client) {
     console.log('Client connected...');
 
+    client.on('profile request', function(data){
+        if (!getStudent(data.id)){
+            registerStudent(data.id);
+       }
+        client.emit('profile data', {profile: getStudent(data.id) });
+    });
+
     client.on('login', function(data) {
            console.log(data);
            data.index = index;
            data.Text = data.id;
            logins.push(data);
 
+           if (!getStudent(data.id)){
+                registerStudent(data.id);
+           }
+           client.emit('profile data', {profile: getStudent(data.id) });
            index ++;
     });
 
@@ -38,6 +49,12 @@ io.on('connection', function(client) {
            data.index = index;
            data.Text = data.id;
            cards.push(data);
+
+           if (!getStudent(data.id)){
+                registerStudent(data.id, data.name);
+            }
+
+            giveExp(getStudent(data.id));
 
            index ++;
     });
@@ -87,6 +104,44 @@ io.on('connection', function(client) {
 
 logins = [];
 cards = [];
+profiles = {};
+
+function getStudent(id){
+    var student = profiles["#"+id];
+    if (!student)
+        return;
+
+    student.nextReward = rewards[student.level];
+    return student;
+}
+
+function registerStudent(id){
+    var student = {
+        id: id,
+        exp: 0,
+        toNextLevel: levelCaps[0],
+        nextReward: "",
+        level: 0,
+        rewards: []
+    }
+
+    profiles["#"+id] = student;
+    console.log(profiles);
+}
+
+levelCaps = [20, 40, 60, 80, 100];
+rewards = ["hat", "mug", "t-shirt"];
+function giveExp(student){
+    var expRate = 10;
+    student.exp += expRate;
+    var levelCap = levelCaps[student.level];
+    if (student.exp > levelCap){
+        var carryOver = student.exp - levelCap;
+        student.level ++;
+        student.exp = carryOver;
+    }
+    student.toNextLevel = levelCap - student.exp;
+}
 
 function standardToMilitary(timeString){
     var hours = Number(timeString.match(/^(\d+)/)[1]);

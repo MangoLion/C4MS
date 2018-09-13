@@ -11,7 +11,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="misapplication-tap-highlight" content="no" />
 
-    <title>New Application</title>
+    <title>C4MS Web Application</title>
 
     <style type="text/css">
       body { margin:0; overflow:hidden; height:100%; }
@@ -23,7 +23,9 @@
       #ngLoadName { padding-bottom:5px;font-weight:bold; }
       #ngLoadCopy { font-size:10px; }
       #ngLoadImg { position:absolute;left:50%;top:50%; }
+
     </style>
+    <link rel="stylesheet" href="styles.css">
 
     <script type="text/javascript">
 
@@ -78,10 +80,10 @@
     <script type="text/javascript" src="controls/loader-bar.js"></script>
 
   </head>
-  <body scroll="no" onload="ngLoadApplication('ngApp')">
+  <body  onload="ngLoadApplication('ngApp')">
 
     <div id="ngAppLoading" class="ngAppLoading">
-      <div id="ngLoadInfo"><div id="ngLoadName">New Application</div><div id="ngLoadCopy">Copyright &copy; 2014<br />All rights reserved.</div></div>
+      <div id="ngLoadInfo"><div id="ngLoadName">C4MS Web Application</div><div id="ngLoadCopy">Copyright &copy; 2014<br />All rights reserved.</div></div>
       <img id="ngLoadImg" src="controls/libs/ng_controls/images/hourglass.gif" alt="..." style="margin-left:-16px;margin-top:-16px;" />
       <div id="ngLoadBar"><div id="ngLoadProgress"></div></div>
     </div>
